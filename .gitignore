@@ -1,0 +1,42 @@
+/hosts/
+/logs/
+/test/
+
+# Enviroment files
+.env
+.envrc
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+*.egg-info/
+dist/
+build/
+*.tar.gz
+*.zip
+
+# Ansible build artifacts
+*.retry
+*.log
+
+# Collection build files
+MANIFEST.json
+
+# CI/CD configuration directories
+.github/
+.gitlab/
+.azure-pipelines/
+
+# Editor and OS files
+.ansible/
+.direnv/
+.venv/
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
