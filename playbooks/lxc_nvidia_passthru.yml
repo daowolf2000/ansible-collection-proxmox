@@ -1,5 +1,9 @@
+---
+# Плейбук который настраивает проброс видеокарты Nvidia внутрь LXC контейнеров Proxmox
+# Требует указания {{ target }} - имени контейнера внутрь которого необходимо прокинуть видеокарту
+  
 - name: Nvidia passthru in LXC
-  hosts: "{{ target }}"
+  hosts: "{{ target | d('tag_gpu') }}"
 
   tasks:
 
