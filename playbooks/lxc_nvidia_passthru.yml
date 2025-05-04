@@ -46,7 +46,7 @@
         replace: '\1 contrib non-free non-free-firmware'
       register: _repo_changed
 
-    - name: Update apt cache
+    - name: Update apt cache # noqa no-handler
       when: _repo_changed is changed
       ansible.builtin.apt:
         update_cache: true
