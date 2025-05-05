@@ -3,7 +3,7 @@
 # Требует указания {{ target }} - имени контейнера внутрь которого необходимо прокинуть видеокарту
   
 - name: Nvidia passthru in LXC
-  hosts: "{{ target | d('tag_gpu') }}"
+  hosts: "{{ x_target | d('tag_gpu') }}"
 
   tasks:
 
