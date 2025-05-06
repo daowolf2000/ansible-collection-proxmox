@@ -1,0 +1,25 @@
+proxmox_lxc_default:
+  hostname    : "{{ omit }}"
+  clone       : "{{ omit }}"
+  description : "{{ omit }}"
+  tags        : []
+  ostemplate  : "{{ omit }}"
+  hookscript  : "{{ omit }}"
+  unprivileged: true
+  onboot      : "{{ omit }}"
+
+  password    : "{{ lookup('env', 'DEFAULT_PASSWORD') }}"
+  pubkey      : "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/id_ed25519.pub') }}"
+
+
+  pool        : "{{ omit }}"
+  cpus        : "{{ omit }}"
+  cores       : "{{ omit }}"
+  cpuunits    : "{{ omit }}"
+  memory      : "{{ omit }}"
+  swap        : "{{ omit }}"
+  disk        : "{{ omit }}"
+  mounts      : "{{ omit }}" # dict
+  netif       : "{{ omit }}" # dict
+  searchdomain: "{{ omit }}"
+  features    : "{{ omit }}" # list[]
