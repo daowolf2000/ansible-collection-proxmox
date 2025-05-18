@@ -1,0 +1,39 @@
+---
+- name: Convert LXC container to template
+  hosts: "{{ proxmox_node | default('pve') }}"
+  become: yes
+  gather_facts: no
+
+  vars:
+    vmid: "{{ vmid }}"  # Обязательная переменная, передавайте при запуске
+
+  tasks:
+    - name: Check if LXC container {{ vmid }} is running
+      ansible.builtin.command: pct status {{ vmid }}
+      register: pct_status
+      failed_when: false
+      changed_when: false
+
+    - name: Stop LXC container {{ vmid }} if running
+      ansible.builtin.command: pct stop {{ vmid }}
+      when: "'status: running' in pct_status.stdout"
+      register: stop_result
+      changed_when: stop_result.rc == 0
+      failed_when: stop_result.rc != 0 and "already stopped" not in stop_result.stderr.lower()
+
+    - name: Wait for container {{ vmid }} to stop
+      ansible.builtin.wait_for:
+        path: "/var/lib/lxc/{{ vmid }}/state"
+        state: absent
+        timeout: 30
+      when: "'status: running' in pct_status.stdout"
+
+    - name: Convert LXC container {{ vmid }} to template
+      ansible.builtin.command: pct template {{ vmid }}
+      register: template_result
+      changed_when: template_result.rc == 0
+      failed_when: template_result.rc != 0
+
+    - name: Show result of template conversion
+      ansible.builtin.debug:
+        var: template_result.stdout
